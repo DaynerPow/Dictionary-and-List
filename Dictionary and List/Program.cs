@@ -8,6 +8,58 @@ namespace Dictionary_and_List
 {
     internal class Program
     {
+        public static void Menu()
+        {
+            while (true)
+            {
+                Console.WriteLine("=== МЕНЮ ===");
+                Console.WriteLine("1. Додати контакт");
+                Console.WriteLine("2. Редагувати контакт");
+                Console.WriteLine("3. Видалити контакт");
+                Console.WriteLine("4. Знайти контакт");
+                Console.WriteLine("5. Показати всі контакти");
+                Console.WriteLine("0. Вихід");
+                Console.Write("Ваш вибір: ");
+
+                string choice = Console.ReadLine();
+                Console.Clear();
+
+                switch (choice)
+                {
+                    case "1":
+                        ContactsLib.AddContact();
+                        break;
+
+                    case "2":
+                        ContactsLib.RedactContact();
+                        break;
+
+                    case "3":
+                        ContactsLib.DeleteContact();
+                        break;
+
+                    case "4":
+                        ContactsLib.SearchContact();
+                        break;
+
+                    case "5":
+                        ContactsLib.ShowContacts();
+                        break;
+
+                    case "0":
+                        Console.WriteLine("До побачення!");
+                        return;
+
+                    default:
+                        Console.WriteLine("!Невірний набір!");
+                        break;
+                }
+
+                Console.WriteLine("\nНатисніть будь-яку клавішу для продовження...");
+                Console.ReadKey();
+            }
+        }
+
         static void Task1()
         {
             try
@@ -42,7 +94,6 @@ namespace Dictionary_and_List
 
         static void Task2()
         {
-            Dictionary<string, string> contacts = new Dictionary<string, string>();
 
 
         }
@@ -53,27 +104,7 @@ namespace Dictionary_and_List
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
 
-            Console.WriteLine("Виберіть задачу (1, 2, 3):");
-            string choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    Task1();
-                    break;
-
-                /*case "2":
-                    Task2();
-                    break;
-
-                case "3":
-                    Task3();
-                    break;*/
-
-                default:
-                    Console.WriteLine("!Невірний набір!");
-                    break;
-            }
+           Menu();
         }
     }
 }
