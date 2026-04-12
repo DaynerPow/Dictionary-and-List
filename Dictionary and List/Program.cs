@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Media;
-using System.Text.Json;
 
 namespace Dictionary_and_List
 {
@@ -97,6 +93,8 @@ namespace Dictionary_and_List
         {
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
+
+            Menu();
         }
     }
 }
