@@ -144,7 +144,7 @@ namespace Dictionary_and_List
 
         static bool IsValidPhone(string input)
         {
-            foreach (char c in input)
+            foreach (char c in input) 
             {
                 if (!char.IsDigit(c) && c != '+' && c != '#' && c != '*')
                     return false;
