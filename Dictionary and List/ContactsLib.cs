@@ -4,6 +4,8 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Media;
+using System.Text.Json;
 
 namespace Dictionary_and_List
 {
@@ -25,8 +27,9 @@ namespace Dictionary_and_List
                 contacts[name] = phone;
                 Console.WriteLine($"Контакт '{name}' з номером телефону '{phone}' додано.");
             }
-            else Console.WriteLine("!Невірні дані! Ім'я має бути більше 2 символів, а номер телефону - від 10 до 12 символів.");
-            Program.Menu();
+            else
+                ConsoleLib.WriteLineAndSound("!Невірні дані! Ім'я має бути більше 2 символів, а номер телефону - від 10 до 12 символів.");
+            return;
         }
 
 
@@ -37,10 +40,10 @@ namespace Dictionary_and_List
 
             if (!contacts.ContainsKey(name))
             {
-                Console.WriteLine("!Контакт не знайдено!");
-                Program.Menu();
+                ConsoleLib.WriteLineAndSound("!Контакт не знайдено!");
+                return;
             }
-
+            else
 
                 Console.WriteLine("Редагуємо:" + "\n1. Ім'я контакту" + "\n2. Номер телефону");
                 string choice = Console.ReadLine();
@@ -48,8 +51,6 @@ namespace Dictionary_and_List
             switch (choice)
             {
                 case "1":
-                    if (contacts.ContainsKey(name))
-                    {
                         Console.WriteLine("Введіть нове ім'я:");
                         string newName = Console.ReadLine();
 
@@ -61,19 +62,12 @@ namespace Dictionary_and_List
                             Console.WriteLine($"Контакт '{name}' перейменовано на '{newName}'.");
                         }
                         else
-                            Console.WriteLine("!Невірне ім'я! Ім'я має бути більше 2 символів.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("!Контакт не знайдено!");
-                    }
-                    Program.Menu();
-                    break;
+                            ConsoleLib.WriteLineAndSound("!Невірне ім'я контакту!");
+                    return;
+                    
 
 
                 case "2":
-                    if (contacts.ContainsKey(name))
-                    {
                         Console.WriteLine("Введіть новий номер телефону:");
                         string newPhone = Console.ReadLine();
 
@@ -83,20 +77,16 @@ namespace Dictionary_and_List
                             Console.WriteLine($"Контакт '{name}' оновлено.");
                         }
                         else
-                            Console.WriteLine("!Невірний номер телефону!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("!Контакт не знайдено!");
-                    }
-                    Program.Menu();
-                    break;
+                            ConsoleLib.WriteLineAndSound("!Невірний номер телефону!");
+                    return;
+                    
 
 
                 default:
-                    Console.WriteLine("!Невірний набір!");
+                    ConsoleLib.WriteLineAndSound("!Невірний набір!");
                     break;
             }
+            return;
         }
 
 
@@ -104,15 +94,16 @@ namespace Dictionary_and_List
         {
             if (contacts.Count == 0)
             {
-                Console.WriteLine("Немає контактів.");
+                ConsoleLib.WriteLineAndSound("Немає контактів.");
                 return;
             }
 
-            Console.WriteLine("=== СПИСОК КОНТАКТІВ ===");
+            Console.WriteLine("СПИСОК КОНТАКТІВ");
             foreach (var contact in contacts)
             {
                 Console.WriteLine(contact.Key + " - " + contact.Value);
             }
+            return;
         }
 
 
@@ -132,7 +123,8 @@ namespace Dictionary_and_List
                 }
             }
             if (!found)
-                Console.WriteLine("Контакти не знайдені.");
+                ConsoleLib.WriteLineAndSound("Контакти не знайдені.");
+            return;
         }
 
 
@@ -148,9 +140,9 @@ namespace Dictionary_and_List
             }
             else
             {
-                Console.WriteLine("!Контакт не знайдено!");
+                ConsoleLib.WriteLineAndSound("!Контакт не знайдено!");
             }
-
+            return;
         }
     }
 }

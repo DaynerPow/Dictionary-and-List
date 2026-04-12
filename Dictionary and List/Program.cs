@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Media;
+using System.Text.Json;
 
 namespace Dictionary_and_List
 {
@@ -12,7 +14,7 @@ namespace Dictionary_and_List
         {
             while (true)
             {
-                Console.WriteLine("=== МЕНЮ ===");
+                Console.WriteLine("МЕНЮ");
                 Console.WriteLine("1. Додати контакт");
                 Console.WriteLine("2. Редагувати контакт");
                 Console.WriteLine("3. Видалити контакт");
@@ -51,7 +53,7 @@ namespace Dictionary_and_List
                         return;
 
                     default:
-                        Console.WriteLine("!Невірний набір!");
+                        ConsoleLib.WriteLineAndSound("!Невірний набір!");
                         break;
                 }
 
@@ -91,20 +93,10 @@ namespace Dictionary_and_List
             }
         }
 
-
-        static void Task2()
-        {
-
-
-        }
-
-
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
-
-           Menu();
         }
     }
 }
