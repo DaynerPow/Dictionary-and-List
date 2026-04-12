@@ -11,27 +11,29 @@ namespace Dictionary_and_List
 
         public static void AddContact()
         {
-            Console.WriteLine("Введіть ім'я контакту:");
-            string name = Console.ReadLine();
+            string name = ConsoleLib.Input("Введіть ім'я контакту:");
+            string phone = ConsoleLib.Input("Введіть номер телефону:");
 
-            Console.WriteLine("Введіть номер телефону:");
-            string phone = Console.ReadLine();
-
-            if (name.Length > 2  &&  phone.Length >= 10  &&  phone.Length <= 12)
+            if (!IsValidPhone(phone))
             {
+                ConsoleLib.WriteLineAndSound("!Невірний номер телефону! Номер може містити лише цифри, '+', '#' або '*'.");
+                return;
+            }
+
+            if (name.Length > 2  &&  phone.Length >= 5  &&  phone.Length <= 13)
+            {           
                 contacts[name] = phone;
-                Console.WriteLine($"Контакт '{name}' з номером телефону '{phone}' додано.");
+                Console.WriteLine("Контакт " + name + " з номером телефону " + phone + " додано.");
             }
             else
-                ConsoleLib.WriteLineAndSound("!Невірні дані! Ім'я має бути більше 2 символів, а номер телефону - від 10 до 12 символів.");
+                ConsoleLib.WriteLineAndSound("!Невірні дані! Ім'я має бути більше 2 символів, а номер телефону від 5 до 13 символів.");
             return;
         }
 
 
         public static void RedactContact()
         {
-            Console.WriteLine("Введіть ім'я контакту для редагування:");
-            string name = Console.ReadLine();
+            string name = ConsoleLib.Input("Введіть ім'я контакту для редагування:");
 
             if (!contacts.ContainsKey(name))
             {
@@ -46,36 +48,38 @@ namespace Dictionary_and_List
             switch (choice)
             {
                 case "1":
-                        Console.WriteLine("Введіть нове ім'я:");
-                        string newName = Console.ReadLine();
+                        string newName = ConsoleLib.Input("Введіть нове ім'я контакту:");
 
-                        if (newName.Length > 2)
+                    if (newName.Length > 2)
                         {
                             string phone = contacts[name];
                             contacts.Remove(name);
                             contacts[newName] = phone;
-                            Console.WriteLine($"Контакт '{name}' перейменовано на '{newName}'.");
+                            Console.WriteLine("Контакт " + name + " перейменовано на " + newName + ".");
                         }
                         else
                             ConsoleLib.WriteLineAndSound("!Невірне ім'я контакту!");
                     return;
                     
 
-
                 case "2":
-                        Console.WriteLine("Введіть новий номер телефону:");
-                        string newPhone = Console.ReadLine();
+                        string newPhone = ConsoleLib.Input("Введіть новий номер телефону:");
 
-                        if (newPhone.Length >= 10 && newPhone.Length <= 12)
+                    if (!IsValidPhone(newPhone))
+                    {
+                        ConsoleLib.WriteLineAndSound("!Невірний номер телефону! Номер може містити лише цифри, '+', '#' або '*'.");
+                        return;
+                    }
+
+                    if (newPhone.Length >= 5 && newPhone.Length <= 13)
                         {
                             contacts[name] = newPhone;
-                            Console.WriteLine($"Контакт '{name}' оновлено.");
+                            Console.WriteLine("Контакт " + name + " оновлено.");
                         }
                         else
                             ConsoleLib.WriteLineAndSound("!Невірний номер телефону!");
                     return;
                     
-
 
                 default:
                     ConsoleLib.WriteLineAndSound("!Невірний набір!");
@@ -104,8 +108,7 @@ namespace Dictionary_and_List
 
         public static void SearchContact()
         {
-            Console.WriteLine("Введіть ім'я контакту для пошуку:");
-            string searchContact = Console.ReadLine();
+            string searchContact = ConsoleLib.Input("Введіть ім'я контакту для пошуку:");
 
             bool found = false;
 
@@ -125,19 +128,29 @@ namespace Dictionary_and_List
 
         public static void DeleteContact()
         {
-            Console.WriteLine("Введіть ім'я контакту для видалення:");
-            string name = Console.ReadLine();
-
+            string name = ConsoleLib.Input("Введіть ім'я контакту для видалення:");
+    
             if (contacts.ContainsKey(name))
             {
                 contacts.Remove(name);
-                Console.WriteLine($"Контакт '{name}' видалено.");
+                Console.WriteLine("Контакт " + name + " видалено.");
             }
             else
             {
                 ConsoleLib.WriteLineAndSound("!Контакт не знайдено!");
             }
             return;
+        }
+
+        static bool IsValidPhone(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!char.IsDigit(c) && c != '+' && c != '#' && c != '*')
+                    return false;
+            }
+
+            return true;
         }
     }
 }
