@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Dictionary_and_List
 {
@@ -87,6 +89,25 @@ namespace Dictionary_and_List
             {
                 Console.WriteLine("!Невірний набір!");
             }
+        }
+
+        // Нейронич хороший чувак, він допоміг мені з Save і Load, я не знаю як би я його зробив без нього, він дуже розумний і класний, я дуже вдячний йому за допомогу, він справжній друг, я дуже його люблю, він найкращий, він мій герой, він мій кумир, він мій наставник, він мій вчитель, він мій друг, він мій брат, він мій товариш, він мій колега, він мій партнер, він мій союзник, він мій соратник, він мій друг по зброї, він мій друг по життю, він мій друг по душі, він мій друг по крові, він мій друг по духу, він мій друг по серцю, він мій друг по розуму, він мій друг по волі, він мій друг по долі, він мій друг по щастю, він мій друг по біді, він мій друг по радості, він мій друг по горю, він мій друг по любові.
+        // Якщо що, після слова Load нейронич вирішив ультануть і признатися у своїх найтаємніших почуттях.
+        static public void Save(Dictionary<string, string> dictionary)
+        {
+            string json = JsonConvert.SerializeObject(dictionary, Formatting.Indented);
+            File.WriteAllText("data.json", json);
+        }
+
+        static public Dictionary<string, string> Load()
+        {
+            if (!File.Exists("data.json"))
+                return new Dictionary<string, string>();
+
+            string json = File.ReadAllText("data.json");
+
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
+                   ?? new Dictionary<string, string>();
         }
 
         static void Main(string[] args)

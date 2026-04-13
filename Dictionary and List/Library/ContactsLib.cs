@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Media;
 
 namespace Dictionary_and_List
 {
     public class ContactsLib
     {
-        private static Dictionary<string, string> contacts = new Dictionary<string, string>();
+        private static Dictionary<string, string> contacts = Program.Load();
 
 
         public static void AddContact()
@@ -23,6 +22,7 @@ namespace Dictionary_and_List
             if (name.Length > 2  &&  phone.Length >= 5  &&  phone.Length <= 13)
             {           
                 contacts[name] = phone;
+                Program.Save(contacts);
                 Console.WriteLine("Контакт " + name + " з номером телефону " + phone + " додано.");
             }
             else
@@ -55,7 +55,8 @@ namespace Dictionary_and_List
                             string phone = contacts[name];
                             contacts.Remove(name);
                             contacts[newName] = phone;
-                            Console.WriteLine("Контакт " + name + " перейменовано на " + newName + ".");
+                            Program.Save(contacts);
+                        Console.WriteLine("Контакт " + name + " перейменовано на " + newName + ".");
                         }
                         else
                             ConsoleLib.WriteLineAndSound("!Невірне ім'я контакту!");
@@ -74,7 +75,8 @@ namespace Dictionary_and_List
                     if (newPhone.Length >= 5 && newPhone.Length <= 13)
                         {
                             contacts[name] = newPhone;
-                            Console.WriteLine("Контакт " + name + " оновлено.");
+                            Program.Save(contacts);
+                        Console.WriteLine("Контакт " + name + " оновлено.");
                         }
                         else
                             ConsoleLib.WriteLineAndSound("!Невірний номер телефону!");
@@ -133,6 +135,7 @@ namespace Dictionary_and_List
             if (contacts.ContainsKey(name))
             {
                 contacts.Remove(name);
+                Program.Save(contacts);
                 Console.WriteLine("Контакт " + name + " видалено.");
             }
             else
