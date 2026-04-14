@@ -1,71 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.IO;
-using Newtonsoft.Json;
 
 namespace Dictionary_and_List
 {
     internal class Program
     {
-        public static void Menu()
-        {
-            try
-            {
-                while (true)
-                {
-                    Console.WriteLine("МЕНЮ");
-                    Console.WriteLine("1. Додати контакт");
-                    Console.WriteLine("2. Редагувати контакт");
-                    Console.WriteLine("3. Видалити контакт");
-                    Console.WriteLine("4. Знайти контакт");
-                    Console.WriteLine("5. Показати всі контакти");
-                    Console.WriteLine("0. Вихід");
-                    Console.Write("Ваш вибір: ");
-
-                    string choice = Console.ReadLine();
-                    Console.Clear();
-
-                    switch (choice)
-                    {
-                        case "1":
-                            ContactsLib.AddContact();
-                            break;
-
-                        case "2":
-                            ContactsLib.RedactContact();
-                            break;
-
-                        case "3":
-                            ContactsLib.DeleteContact();
-                            break;
-
-                        case "4":
-                            ContactsLib.SearchContact();
-                            break;
-
-                        case "5":
-                            ContactsLib.ShowContacts();
-                            break;
-
-                        case "0":
-                            Console.WriteLine("До побачення!");
-                            return;
-
-                        default:
-                            ConsoleLib.WriteLineAndSound("!Невірний набір!");
-                            break;
-                    }
-
-                    Console.WriteLine("\nНатисніть будь-яку клавішу для продовження...");
-                    Console.ReadKey();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("!ПОМИЛКА!  Причина: " + ex.Message);
-            }
-        }
+        //Ось перша задача якщо що
         static void Task1()
         {
             try
@@ -97,22 +38,6 @@ namespace Dictionary_and_List
             }
         }
 
-        static public void Save(Dictionary<string, string> dictionary)
-        {
-            string json = JsonConvert.SerializeObject(dictionary, Formatting.Indented);
-            File.WriteAllText("data.json", json);
-        }
-
-        static public Dictionary<string, string> Load()
-        {
-            if (!File.Exists("data.json"))
-                return new Dictionary<string, string>();
-
-            string json = File.ReadAllText("data.json");
-
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
-                   ?? new Dictionary<string, string>();
-        }
 
         static void Main(string[] args)
         {
@@ -121,7 +46,7 @@ namespace Dictionary_and_List
 
             try
             {
-                Menu();
+                ConsoleLib.Menu();
             }
             catch (Exception ex)
             {

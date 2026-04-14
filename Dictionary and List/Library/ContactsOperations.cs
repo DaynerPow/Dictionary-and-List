@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Dictionary_and_List
 {
-    public class ContactsLib
+    public class ContactsOperations
     {
-        private static Dictionary<string, string> contacts = Program.Load();
+        private static Dictionary<string, string> contacts = SaveLoad.Load();
 
 
         public static void AddContact()
@@ -15,17 +15,11 @@ namespace Dictionary_and_List
                 string name = ConsoleLib.Input("Введіть ім'я контакту:");
                 string phone = ConsoleLib.Input("Введіть номер телефону:");
 
-                if (!IsValidPhone(phone))
-                {
-                    ConsoleLib.WriteLineAndSound("!Невірний номер телефону! Номер може містити лише цифри, '+', '#' або '*'.");
-                    return;
-                }
+                ConsoleLib.InvalidPhoneMessage(phone);
 
                 if (name.Length > 2 && phone.Length >= 5 && phone.Length <= 13)
                 {
-                    contacts[name] = phone;
-                    Program.Save(contacts);
-                    Console.WriteLine("Контакт " + name + " з номером телефону " + phone + " додано.");
+                    SaveLoad.SaveContacts(name, phone, "Контакт " + name + " з номером телефону " + phone + " додано.", contacts);
                 }
                 else
                     ConsoleLib.WriteLineAndSound("!Невірні дані! Ім'я має бути більше 2 символів, а номер телефону від 5 до 13 символів.");
@@ -64,9 +58,7 @@ namespace Dictionary_and_List
                         {
                             string phone = contacts[name];
                             contacts.Remove(name);
-                            contacts[newName] = phone;
-                            Program.Save(contacts);
-                            Console.WriteLine("Контакт " + name + " перейменовано на " + newName + ".");
+                            SaveLoad.SaveContacts(newName, phone, "Контакт " + name + " перейменовано на " + newName + ".", contacts);
                         }
                         else
                             ConsoleLib.WriteLineAndSound("!Невірне ім'я контакту!");
@@ -76,17 +68,11 @@ namespace Dictionary_and_List
                     case "2":
                         string newPhone = ConsoleLib.Input("Введіть новий номер телефону:");
 
-                        if (!IsValidPhone(newPhone))
-                        {
-                            ConsoleLib.WriteLineAndSound("!Невірний номер телефону! Номер може містити лише цифри, '+', '#' або '*'.");
-                            return;
-                        }
+                        ConsoleLib.InvalidPhoneMessage(newPhone);
 
                         if (newPhone.Length >= 5 && newPhone.Length <= 13)
                         {
-                            contacts[name] = newPhone;
-                            Program.Save(contacts);
-                            Console.WriteLine("Контакт " + name + " оновлено.");
+                            SaveLoad.SaveContacts(name, newPhone, "Контакт " + name + " оновлено.", contacts);
                         }
                         else
                             ConsoleLib.WriteLineAndSound("!Невірний номер телефону!");
@@ -149,7 +135,9 @@ namespace Dictionary_and_List
                     }
                 }
                 if (!found)
+                {
                     ConsoleLib.WriteLineAndSound("Контакти не знайдені.");
+                }
                 return;
             }
             catch (Exception ex)
@@ -169,7 +157,7 @@ namespace Dictionary_and_List
                 if (contacts.ContainsKey(name))
                 {
                     contacts.Remove(name);
-                    Program.Save(contacts);
+                    SaveLoad.Save(contacts);
                     Console.WriteLine("Контакт " + name + " видалено.");
                 }
                 else
@@ -183,17 +171,9 @@ namespace Dictionary_and_List
                 ConsoleLib.WriteLineAndSound("!Помилка: " + ex.Message);
                 return;
             }
-       }
-
-        static bool IsValidPhone(string input)
-        {
-            foreach (char c in input) 
-            {
-                if (!char.IsDigit(c) && c != '+' && c != '#' && c != '*')
-                    return false;
-            }
-
-            return true;
         }
+
+        
     }
+    
 }
