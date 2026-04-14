@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Dictionary_and_List
 {
@@ -13,6 +14,16 @@ namespace Dictionary_and_List
             }
 
             return true;
-        }       
+        }
+
+        public static bool IsContactsEmpty(Dictionary<string, string> contacts)
+        {
+            if (contacts.Count == 0)
+            {
+                ConsoleLib.WriteLineAndSound("!Немає контактів!");
+                return true;
+            }
+            return false;
+        }
     }
 }

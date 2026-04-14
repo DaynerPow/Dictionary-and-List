@@ -37,6 +37,9 @@ namespace Dictionary_and_List
         {
             try
             {
+                if (Validator.IsContactsEmpty(contacts))
+                    return;
+
                 string name = ConsoleLib.Input("Введіть ім'я контакту для редагування:");
 
                 if (!contacts.ContainsKey(name))
@@ -61,7 +64,7 @@ namespace Dictionary_and_List
                             SaveLoad.SaveContacts(newName, phone, "Контакт " + name + " перейменовано на " + newName + ".", contacts);
                         }
                         else
-                            ConsoleLib.WriteLineAndSound("!Невірне ім'я контакту!");
+                            ConsoleLib.WriteLineAndSound("!Невірне ім'я контакту! Ім'я має бути більше 2 символів.");
                         return;
 
 
@@ -75,7 +78,7 @@ namespace Dictionary_and_List
                             SaveLoad.SaveContacts(name, newPhone, "Контакт " + name + " оновлено.", contacts);
                         }
                         else
-                            ConsoleLib.WriteLineAndSound("!Невірний номер телефону!");
+                            ConsoleLib.WriteLineAndSound("!Невірний номер телефону! Номер телефону має бути від 5 до 13 символів.");
                         return;
 
 
@@ -97,11 +100,8 @@ namespace Dictionary_and_List
         {
             try
             {
-                if (contacts.Count == 0)
-                {
-                    ConsoleLib.WriteLineAndSound("Немає контактів.");
+                if (Validator.IsContactsEmpty(contacts))
                     return;
-                }
 
                 Console.WriteLine("СПИСОК КОНТАКТІВ");
                 foreach (var contact in contacts)
@@ -122,6 +122,9 @@ namespace Dictionary_and_List
         {
             try
             {
+                if (Validator.IsContactsEmpty(contacts))
+                    return;
+
                 string searchContact = ConsoleLib.Input("Введіть ім'я контакту для пошуку:");
 
                 bool found = false;
@@ -152,6 +155,9 @@ namespace Dictionary_and_List
         {
             try
             {
+                if (Validator.IsContactsEmpty(contacts))
+                    return;
+
                 string name = ConsoleLib.Input("Введіть ім'я контакту для видалення:");
 
                 if (contacts.ContainsKey(name))
@@ -172,8 +178,5 @@ namespace Dictionary_and_List
                 return;
             }
         }
-
-        
     }
-    
 }
