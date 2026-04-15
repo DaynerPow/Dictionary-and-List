@@ -25,5 +25,15 @@ namespace Dictionary_and_List
             }
             return false;
         }
+
+        public static bool IsSameName(string name, Dictionary<string, string> contacts)
+        {
+            if (contacts.ContainsKey(name))
+            {
+                ConsoleLib.WriteLineAndSound("!Контакт з таким ім'ям вже існує!");
+                return true;
+            }
+            return false;
+        }
     }
 }

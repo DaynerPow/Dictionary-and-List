@@ -15,7 +15,10 @@ namespace Dictionary_and_List
                 string name = ConsoleLib.Input("Введіть ім'я контакту:");
                 string phone = ConsoleLib.Input("Введіть номер телефону:");
 
-                ConsoleLib.InvalidPhoneMessage(phone);
+                if (Validator.IsSameName(name, contacts))
+                {
+                    return;
+                }
 
                 if (name.Length > 2 && phone.Length >= 5 && phone.Length <= 13)
                 {
